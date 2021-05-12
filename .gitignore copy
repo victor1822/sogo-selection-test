@@ -1,0 +1,19 @@
+node_modules
+coverage
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# build
+build
+
+# intellij
+.idea
