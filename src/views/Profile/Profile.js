@@ -7,10 +7,11 @@ import Content from './components/Content/Content'
 import * as Styled from './Profile.styled'
 import { loadContractsAction } from '../../ducks/actions/contracts/contracts'
 import Modal from './components/Modal/Modal'
+import Feedback from './components/Feedback/Feedback'
 
 const Profile = () => {
   const dispatch = useDispatch()
-  const { modalIsVisible } = useSelector((state) => state.modalState)
+  const { modalState: { modalIsVisible }, feedbackState } = useSelector((state) => state)
   useEffect(() => {
     const cacheContracts = clientSideCookies.get('@sogo-test/savedContracts')
     const { savedContracts } = cacheContracts !== undefined ? JSON.parse(cacheContracts) : []
@@ -23,6 +24,7 @@ const Profile = () => {
   }, [dispatch])
   return (
     <Styled.Wrapper>
+      {feedbackState.feedbackIsVisible && <Feedback />}
       {modalIsVisible && <Modal />}
       <LeftMenu />
       <Content />

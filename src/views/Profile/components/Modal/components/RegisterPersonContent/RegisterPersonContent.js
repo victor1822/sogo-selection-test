@@ -13,10 +13,12 @@ import {
   changeModalDataState,
   changeModalVisibility
 } from '../../../../../../ducks/actions/modal/modal'
+import { changeFeedbackStateAction } from '../../../../../../ducks/actions/feedback/feedback'
 
 const RegisterPersonContent = () => {
+  const dispatch = useDispatch()
   const title = 'Cadastre aqui os dados do colaborador do novo contrato'
-  const { modalData: defaultValues } = useSelector((state) => state.modalState)
+  const { modalState: { modalData: defaultValues }, contractState: { contracts } } = useSelector((state) => state)
   const {
     register, handleSubmit, errors, control, watch, setValue
   } = useForm({
@@ -25,7 +27,36 @@ const RegisterPersonContent = () => {
     resolver: yupResolver(validationSchema),
     defaultValues
   })
-
+  const changedName = watch('name')
+  useEffect(() => {
+    if (contracts.map((item) => item?.employee?.name).includes(changedName)) {
+      dispatch(changeFeedbackStateAction({
+        error: false,
+        feedback: 'Já temos um registro de um usuário com este nome',
+        feedbackIsVisible: true
+      }))
+    }
+  }, [changedName])
+  const changedEmail = watch('email')
+  useEffect(() => {
+    if (contracts.map((item) => item?.employee?.email).includes(changedEmail)) {
+      dispatch(changeFeedbackStateAction({
+        error: false,
+        feedback: 'Já temos um registro de um usuário com este email',
+        feedbackIsVisible: true
+      }))
+    }
+  }, [changedEmail])
+  const changedCPF = watch('cpf')
+  useEffect(() => {
+    if (contracts.map((item) => item?.employee?.cpf).includes(changedCPF)) {
+      dispatch(changeFeedbackStateAction({
+        error: false,
+        feedback: 'Já temos um registro de um usuário com este CPF',
+        feedbackIsVisible: true
+      }))
+    }
+  }, [changedCPF])
   const changedCep = watch('cep')
   const [newCepData, setNewCepData] = useState(undefined)
   useEffect(() => {
@@ -53,7 +84,6 @@ const RegisterPersonContent = () => {
       setValue('neighbourhood', newCepData?.localidade, { shouldValidate: true })
     }
   }, [newCepData])
-  const dispatch = useDispatch()
   const onFormSubmit = (data) => {
     dispatch(changeModalDataState(data))
     dispatch(changeModalContentState('contract-register'))

@@ -41,9 +41,11 @@ export const ContentTitle = styled.div`
   align-self: center;
   align-items: center;
 
-`
+  `
 
 export const Arrow = styled.button`
+    outline: none;
+    border: none;
     background-color: purple;
     width: 30px;
     height: 30px;
@@ -118,6 +120,7 @@ export const Input = styled.input`
   ::placeholder {
     color: purple;
   }
+  min-height: 35px;
 `
 export const Button = styled.button`
   display: flex;
@@ -125,13 +128,14 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  border: 2px solid purple;
+  border: 2px solid yellowgreen;
   background-color: whitesmoke;
-  color: purple;
+  color: yellowgreen;
   &:hover {
-    background-color: purple;
+    background-color: yellowgreen;
     color: white;
   }
+  min-height: 35px;
 `
 export const ReconsiderButton = styled(Button)`
   height: 45px;

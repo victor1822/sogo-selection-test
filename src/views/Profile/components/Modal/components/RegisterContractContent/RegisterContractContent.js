@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { uuid } from 'uuidv4'
 
@@ -14,11 +14,12 @@ import {
   changeModalDataState
 } from '../../../../../../ducks/actions/modal/modal'
 import { addNewContractAction } from '../../../../../../ducks/actions/contracts/contracts'
+import { changeFeedbackStateAction } from '../../../../../../ducks/actions/feedback/feedback'
 
 const RegisterContractContent = () => {
   const title = 'Cadastre aqui os dados do novo contrato'
   const {
-    register, handleSubmit, errors, control
+    register, handleSubmit, errors, control, watch
   } = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
@@ -38,7 +39,25 @@ const RegisterContractContent = () => {
       contracts
     }
   } = useSelector((state) => state)
+  const chagedNumber = watch('number')
+  useEffect(() => {
+    if (contracts.map((item) => item?.number).includes(chagedNumber)) {
+      dispatch(changeFeedbackStateAction({
+        error: true,
+        feedback: 'Já temos um registro de um contrato com este número, não será possível registrá-lo',
+        feedbackIsVisible: true
+      }))
+    }
+  }, [chagedNumber])
   const onFormSubmit = (data) => {
+    if (contracts.map((item) => item?.number).includes(chagedNumber)) {
+      dispatch(changeFeedbackStateAction({
+        error: true,
+        feedback: 'Já temos um registro de um contrato com este número, não será possível registrá-lo',
+        feedbackIsVisible: true
+      }))
+      return
+    }
     const { number: contractNumber, valid_thru: validThru } = data
     dispatch(changeModalVisibility(false))
     dispatch(changeModalDataState({}))
