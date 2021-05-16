@@ -31,7 +31,7 @@ const RegisterPersonContent = () => {
   useEffect(() => {
     if (contracts.map((item) => item?.employee?.name).includes(changedName)) {
       dispatch(changeFeedbackStateAction({
-        error: false,
+        error: true,
         feedback: 'Já temos um registro de um usuário com este nome',
         feedbackIsVisible: true
       }))
@@ -41,7 +41,7 @@ const RegisterPersonContent = () => {
   useEffect(() => {
     if (contracts.map((item) => item?.employee?.email).includes(changedEmail)) {
       dispatch(changeFeedbackStateAction({
-        error: false,
+        error: true,
         feedback: 'Já temos um registro de um usuário com este email',
         feedbackIsVisible: true
       }))
@@ -51,7 +51,7 @@ const RegisterPersonContent = () => {
   useEffect(() => {
     if (contracts.map((item) => item?.employee?.cpf).includes(changedCPF)) {
       dispatch(changeFeedbackStateAction({
-        error: false,
+        error: true,
         feedback: 'Já temos um registro de um usuário com este CPF',
         feedbackIsVisible: true
       }))
@@ -85,6 +85,17 @@ const RegisterPersonContent = () => {
     }
   }, [newCepData])
   const onFormSubmit = (data) => {
+    if (contracts.filter((contract) => (contract?.employee?.name === data?.name
+      || contract?.employee?.email === data?.email
+      || contract?.employee?.cpf === data?.cpf)).length > 0) {
+      dispatch(changeFeedbackStateAction({
+        error: true,
+        feedback:
+        'Já temos um registro de um usuário com este mesmo CPF, email, ou nome! Por favor, tente usar novos registros!',
+        feedbackIsVisible: true
+      }))
+      return
+    }
     dispatch(changeModalDataState(data))
     dispatch(changeModalContentState('contract-register'))
   }

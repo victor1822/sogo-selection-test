@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { isPast, isFuture } from 'date-fns'
 import {
   formatDate,
@@ -10,6 +10,7 @@ import {
 } from '../../../../../../helpers/formatDate/formatDate'
 
 import * as Styled from './Filters.styles'
+import { changeFeedbackStateAction } from '../../../../../../ducks/actions/feedback/feedback'
 
 const Filters = () => {
   const filterOptions = [
@@ -60,6 +61,22 @@ const Filters = () => {
   }).filter((contract) => contract?.employee?.name.includes(typedText))
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [selectedContractIndex, setSelectedContractIndex] = useState(-1)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (searchResults.length) {
+      dispatch(changeFeedbackStateAction({
+        error: false,
+        feedback: 'Não temos registros conforme sua busca',
+        feedbackIsVisible: true
+      }))
+    } else {
+      dispatch(changeFeedbackStateAction({
+        error: false,
+        feedback: '',
+        feedbackIsVisible: false
+      }))
+    }
+  }, [dispatch, searchResults.length])
   return (
     <Styled.FiltersWrapper>
       <Styled.Title>Seus contratos</Styled.Title>
