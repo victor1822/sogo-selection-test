@@ -11,6 +11,7 @@ export const LeftMenuWrapper = styled.div`
   background-color: white;
   box-shadow: 5px 3px 5px rgba(1,1,1,0.2);
   row-gap: 10px;
+  position: fixed;
 `
 export const MenuOption = styled.h1`
   padding: 5px 0px;
