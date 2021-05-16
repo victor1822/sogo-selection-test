@@ -88,7 +88,10 @@ const RegisterPersonContent = () => {
     dispatch(changeModalDataState(data))
     dispatch(changeModalContentState('contract-register'))
   }
-  const decline = () => dispatch(changeModalVisibility(false))
+  const decline = () => {
+    dispatch(changeModalVisibility(false))
+    dispatch(changeModalDataState({}))
+  }
   return (
     <Styled.Wrapper>
       <Styled.Title>{title}</Styled.Title>

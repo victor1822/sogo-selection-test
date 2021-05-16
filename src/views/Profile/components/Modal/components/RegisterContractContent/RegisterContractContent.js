@@ -82,7 +82,6 @@ const RegisterContractContent = () => {
       }
     }
     dispatch(addNewContractAction([...contracts, newContract]))
-    // dispatch(addNewContractAction(data))
   }
   return (
     <Styled.Wrapper>
