@@ -10,7 +10,8 @@ import * as Styled from './RegisterContractContent.styles'
 import validationSchema from './validationSchema'
 import {
   changeModalContentState,
-  changeModalVisibility
+  changeModalVisibility,
+  changeModalDataState
 } from '../../../../../../ducks/actions/modal/modal'
 import { addNewContractAction } from '../../../../../../ducks/actions/contracts/contracts'
 
@@ -39,7 +40,8 @@ const RegisterContractContent = () => {
   } = useSelector((state) => state)
   const onFormSubmit = (data) => {
     const { number: contractNumber, valid_thru: validThru } = data
-    changeModalVisibility(false)
+    dispatch(changeModalVisibility(false))
+    dispatch(changeModalDataState({}))
     const newContract = {
       id: uuid(),
       number: contractNumber,
@@ -62,8 +64,6 @@ const RegisterContractContent = () => {
     }
     dispatch(addNewContractAction([...contracts, newContract]))
     // dispatch(addNewContractAction(data))
-    // eslint-disable-next-line no-console
-    console.log(data)
   }
   return (
     <Styled.Wrapper>

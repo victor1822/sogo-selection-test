@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { useSelector } from 'react-redux'
-import { isFuture } from 'date-fns'
+import { isFuture, isDate } from 'date-fns'
 import * as Styled from './Dashboard.styles'
 import LineChart from './components/LineChart/LineChart'
 
@@ -41,17 +41,14 @@ const Dashboard = () => {
   ]
 
   const timeContributionData = contracts.map((item) => {
-    const miliSDistance = item.valid_thru?.getTime() - item.creation_date?.getTime()
+    const miliSDistance = isDate(item.valid_thru)
+      ? item.valid_thru?.getTime() - item.creation_date?.getTime()
+      : 0
     return {
       x: item.employee.name.split(' ')[0],
       y: miliSDistance / ONE_DAY_IN_MILLIS
     }
   })
-
-  console.log(contracts)
-
-  // const arr = ['1', '2', '3', '4']
-  // const value = arr.reduce((acc, c) => (c >= 2 ? (acc + 1) : acc), 0)
   return (
     <Styled.DashboardWrapper>
       <Styled.Title>Dashboard</Styled.Title>

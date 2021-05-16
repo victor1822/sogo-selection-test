@@ -38,8 +38,6 @@ const RegisterPersonContent = () => {
         setNewCepData({ ...res })
       } catch (err) {
         setNewCepData(undefined)
-        // eslint-disable-next-line no-console
-        console.log(err)
       }
     }
 
