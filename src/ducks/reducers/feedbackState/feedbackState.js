@@ -5,7 +5,7 @@ import createReducer from '../../../helpers/createReducer/createReducer'
 
 const initialState = {
   error: false,
-  feedback: 'bla',
+  feedback: '',
   feedbackIsVisible: false
 }
 

@@ -20,14 +20,14 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 20;
-  padding: 10px 50px;
+  padding: 15px 50px 10px 50px;
   h4 {
     max-width: 300px;
     color:  ${(props) => (props.error ? '#ffc40c' : 'red')};
     font-weight: 500;
     padding: 5px 0px;
     text-align: left;
-    font-size: 20px;
+    font-size: 14px;
     font-family: poppins;
     cursor: pointer;
     align-self: center;
